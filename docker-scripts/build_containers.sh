@@ -20,11 +20,11 @@ else
     cp -r $1 uwsgi/cpython
     PLATFORM_TRIPLET=$(./get_platform_triplet.sh)
     if [ $? -ne 0 ]; then exit $?; fi 
-    PYTHON_SOABI=$(./get_python_soabi.sh uwsgi/cpython/bin/python3)
+    PYTHON_SOABI=$(./get_python_soabi.sh uwsgi/cpython/python)
     if [ $? -ne 0 ]; then exit $?; fi 
-    PYTHON_VERSION=$(./get_python_version.sh uwsgi/cpython/bin/python3)
+    PYTHON_VERSION=$(./get_python_version.sh uwsgi/cpython/python)
     if [ $? -ne 0 ]; then exit $?; fi 
-    PYTHON_SHARED=$(./get_python_shared.sh uwsgi/cpython/bin/python3)
+    PYTHON_SHARED=$(./get_python_shared.sh uwsgi/cpython/python)
     if [ $? -ne 0 ]; then exit $?; fi 
     echo $PLATFORM_TRIPLET $PYTHON_SOABI $PYTHON_VERSION $PYTHON_SHARED
 
@@ -40,7 +40,8 @@ else
                  --build-arg cpython_install="cpython"              \
                  --build-arg platform_triplet="$PLATFORM_TRIPLET"   \
                  --build-arg python_soabi="$PYTHON_SOABI"           \
-                 --build-arg python_version="$PYTHON_VERSION" .
+                 --build-arg python_version="$PYTHON_VERSION" .     \
+                 --progress=plain
     echo "-------------------------------------------------------------"
     echo
     cd ../
